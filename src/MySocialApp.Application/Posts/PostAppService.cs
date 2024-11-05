@@ -21,17 +21,17 @@ internal class PostAppService : IPostAppService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<IEnumerable<PostFeedResponse>> GetFeed(FilterPaginatedRequest filterRequest)
+    public async Task<PaginationResponse<PostFeedResponse>> GetFeed(FilterPaginatedRequest filterRequest)
     {
         var posts = await _postRepository.GetFeed(_userSession.Id, filterRequest.Page, filterRequest.PageSize);
-        return posts.Item1.Select(p => new PostFeedResponse
+        return new PaginationResponse<PostFeedResponse>( posts.Item1.Select(p => new PostFeedResponse
         {
             Id = p.Id,
             Content = p.Content,
             Likes = p.LikesCount,
             Liked = p.Liked,
             CreateAt = p.CreateAt
-        });
+        }), posts.Item2);
     }
 
     public async Task Add(PostRequest request)
