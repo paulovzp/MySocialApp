@@ -1,0 +1,19 @@
+services:
+  mbs.database:
+    image: mysql:8
+    volumes:
+      - mbs_database_data:/var/lib/mysql
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: SxhBEQ99MMn9a4wA
+      MYSQL_DATABASE: DBMySocialApp
+      MYSQL_USER: MySocialAppRootUser
+      MYSQL_PASSWORD: SxhBEQ99MMn9a4wS
+    ports:
+       - "3306:3306"
+volumes:
+  mbs_database_data: {}
+
+networks:
+  network_api:
+    driver: bridge 
